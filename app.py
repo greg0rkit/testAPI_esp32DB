@@ -17,5 +17,5 @@ def hello():
     result_list = [r[0] for r in result]
     cur.close()
     conn.close()
-    return 'last reading was' + result_list
+    return 'last reading was' + result_list[0]
     
