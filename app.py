@@ -16,5 +16,5 @@ def hello():
     result =cur.fetchall()
     cur.close()
     conn.close()
-    return "Hello i am alive!! Last temperature reading was:".join(result)
+    return "Hello i am alive!! Last temperature reading was:".join(result[0])
     
