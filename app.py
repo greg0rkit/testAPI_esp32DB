@@ -17,7 +17,5 @@ def hello():
     result_list = [r[0] for r in result]
     cur.close()
     conn.close()
-    return_string = "Hello i am alive!! Last temperature reading was:".join(result_list)
-    
-    return return_string
+    return 'last reading was' + result_list
     
