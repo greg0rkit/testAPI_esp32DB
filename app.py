@@ -14,7 +14,7 @@ def hello():
     cur = conn.cursor()
     cur.execute("SELECT temperaturevalue FROM TEMPERATURES WHERE DATE=%s ORDER BY TIME DESC LIMIT 1", (date_now_formated,))
     result =cur.fetchall()
-    result_list = [r[0 for r in result]
+    result_list = [r[0] for r in result]
     cur.close()
     conn.close()
     return "Hello i am alive!! Last temperature reading was:".join(result[0])
