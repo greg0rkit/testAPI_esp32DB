@@ -18,4 +18,4 @@ def hello():
     cur.close()
     conn.close()
     return "Hello i am alive!! Last temperature reading was:".join(result[0])
-    f
+    
