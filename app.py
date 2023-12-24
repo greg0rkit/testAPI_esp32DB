@@ -1,21 +1,30 @@
-from flask import Flask
+from flask import Flask, render_template
 import psycopg2
 from datetime import datetime
+import pandas as pd
+import plotly.express as px
+import plotly
+import json
 
 app = Flask(__name__)
 
 
-#fixed root endpointf
 @app.route('/')
-def hello():
-    date_now = datetime.utcnow()
-    date_now_formated = date_now.strftime("%d-%m-%Y")
+def tempChart():
     conn=psycopg2.connect(host="raspkit.duckdns.org", dbname="esp32", user="esp32", password="esp32pass")
     cur = conn.cursor()
-    cur.execute("SELECT temperaturevalue FROM TEMPERATURES WHERE DATE=%s ORDER BY TIME DESC LIMIT 1", (date_now_formated,))
-    result =cur.fetchall()
-    result_list = [r[0] for r in result]
+    cur.execute("SELECT TIME FROM TEMPERATURES WHERE DATE='22-12-2023' ORDER BY TIME ASC")
+    time_results = cur.fetchall()
+    cur.close()
+    cur = conn.cursor()
+    cur.execute("SELECT TEMPERATUREVALUE FROM TEMPERATURES WHERE DATE='22-12-2023' ORDER BY TIME ASC")
+    temperature_results = cur.fetchall()
     cur.close()
     conn.close()
-    return 'I am alive!! Last temperature reading was: ' + result_list
-    
+    time_results_list = [r[0] for r in time_results]
+    temperature_results_list = [float(r[0]) for r in temperature_results]
+    dict = {"Time":time_results_list, "Temperature":temperature_results_list}
+    df = pd.DataFrame(data=dict)
+    fig = px.line(df, x='Time', y='Temperature')
+    graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+    return render_template('tempChart.html', graphJSON=graphJSON)
