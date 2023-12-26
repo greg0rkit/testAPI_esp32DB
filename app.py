@@ -1,10 +1,6 @@
 from flask import Flask, render_template
 import psycopg2
 from datetime import datetime
-import pandas as pd
-import plotly.express as px
-import plotly
-import json
 
 app = Flask(__name__)
 
