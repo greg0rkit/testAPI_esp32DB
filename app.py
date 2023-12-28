@@ -13,7 +13,7 @@ app = Flask(__name__)
 def tempChart():
     conn=psycopg2.connect(host="raspkit.duckdns.org", dbname="esp32", user="esp32", password="esp32pass")
     cur = conn.cursor()
-    cur.execute("SELECT TIME FROM TEMPERATURES WHERE DATE='22-12-23' ORDER BY TIME")
+    cur.execute("SELECT TIME FROM TEMPERATURES WHERE DATE='22-12-2023' ORDER BY TIME")
     time_results = cur.fetchall()
     cur.close()
     time_results_list= [r[0] for r in time_results]
@@ -28,3 +28,7 @@ def tempChart():
     fig = px.line(df, x='Time', y='Temperature')
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
     return render_template('tempChart.html', graphJSON=graphJSON) 
+
+if __name__ == '__main__':
+    app.debug=True
+    app.run()
