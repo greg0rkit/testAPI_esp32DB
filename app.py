@@ -21,7 +21,7 @@ def tempChart():
     cur.execute("SELECT TEMPERATUREVALUE FROM TEMPERATURES WHERE DATE='22-12-2023' ORDER BY TIME")
     temp_results = cur.fetchall()
     cur.close()
-    temp_results_list = [t[0] for t in temp_results]
+    temp_results_list = [float(t[0]) for t in temp_results]
     conn.close()
     
     df = pd.DataFrame({'Time':time_results_list, 'Temperature':temp_results_list})
