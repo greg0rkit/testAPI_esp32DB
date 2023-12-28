@@ -27,4 +27,4 @@ def tempChart():
     df = pd.DataFrame({'Time':time_results_list, 'Temperature':temp_results_list})
     fig = px.line(df, x='Time', y='Temperature')
     graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
-    return render_template('tempChart.html', graphJSON=graphJSON)
+    return render_template('tempChart.html', graphJSON=graphJSON) 
